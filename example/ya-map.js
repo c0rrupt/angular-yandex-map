@@ -606,6 +606,7 @@ angular.module('yaMap',[]).
                         }
                     }else if(obj){
                         ctrl.removeGeoObjects(obj);
+						obj = null;
                     }
                 },angular.equals);
                 var checkEditing = function(editAttr){

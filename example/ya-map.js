@@ -602,6 +602,10 @@ angular.module('yaMap',[]).
                                 }
                             }
                         }else{
+                            if (newValue.hasOwnProperty('options')) {
+                              options = angular.extend(options || {}, newValue.options);
+                            }
+
                             createGeoObject(newValue,options);
                         }
                     }else if(obj){

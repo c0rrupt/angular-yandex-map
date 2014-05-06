@@ -601,6 +601,12 @@ angular.module('yaMap',[]).
                                     obj.properties.set(key, properties[key]);
                                 }
                             }
+                            var options = newValue.options;
+                            for(var optionKey in options){
+                                if(options.hasOwnProperty(optionKey)){
+                                    obj.options.set(optionKey, options[optionKey]);
+                                }
+                            }
                         }else{
                             if (newValue.hasOwnProperty('options')) {
                               options = angular.extend(options || {}, newValue.options);

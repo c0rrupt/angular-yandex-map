@@ -436,6 +436,15 @@ angular.module('yaMap',[]).
                 }
                 mapToolbar.add(obj);
                 scope.yaAfterInit({$target:obj});
+
+                // Dynamic change visible option
+                attrs.$observe('yaVisible', function (isVisible) {
+                    if (!obj) {
+                        return;
+                    }
+
+                    obj.options.set('visible', scope.$eval(isVisible));
+                });
             }
         };
     }]).

@@ -578,11 +578,15 @@ angular.module('yaMap',[]).
             link:function(scope,elm,attrs,ctrls){
                 var ctrl = ctrls[2] || ctrls[1] || ctrls[0],
                     obj;
-                var options = attrs.yaOptions ? scope.$eval(attrs.yaOptions) : undefined;
-                if(options && options.balloonContentLayout){
-                    options.balloonContentLayout = templateLayoutFactory.get(options.balloonContentLayout);
-                }
-                var createGeoObject = function(from, options){
+                var createGeoObject = function (from) {
+                    var options = attrs.yaOptions ? scope.$eval(attrs.yaOptions) : {};
+                    if (options.balloonContentLayout) {
+                        options.balloonContentLayout = templateLayoutFactory.get(options.balloonContentLayout);
+                    }
+                    if (from.hasOwnProperty('options')) {
+                        options = angular.extend(options, from.options);
+                    }
+
                     obj = new ymaps.GeoObject(from, options);
                     //подписка на события
                     for(var key in attrs){
@@ -617,11 +621,7 @@ angular.module('yaMap',[]).
                                 }
                             }
                         }else{
-                            if (newValue.hasOwnProperty('options')) {
-                              options = angular.extend(options || {}, newValue.options);
-                            }
-
-                            createGeoObject(newValue,options);
+                            createGeoObject(newValue);
                         }
                     }else if(obj){
                         ctrl.removeGeoObjects(obj);

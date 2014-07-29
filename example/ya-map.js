@@ -129,7 +129,7 @@ angular.module('yaMap',[]).
             });
         };
     }).
-    service('templateLayoutFactory',[function(){
+    service('templateLayoutFactory',['mapApiLoad',function(mapApiLoad){
         this._cache = {};
         this.get=function(key){
             return this._cache[key];
@@ -138,7 +138,10 @@ angular.module('yaMap',[]).
             if(this._cache[key]){
                 return;
             }
-            this._cache[key] = ymaps.templateLayoutFactory.createClass(template,overadice);
+            var self=this;
+            mapApiLoad(function(){
+                self._cache[key] = ymaps.templateLayoutFactory.createClass(template,overadice);
+            });
         };
     }]).
 
